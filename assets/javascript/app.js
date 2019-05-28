@@ -54,16 +54,59 @@ var index = 0;
 var timer = 15;
 var intervalId;
 var isClockRunning = false;
+var userGuess;
 
 // =====================================================================================================================================
 // ================================================== FUNCTIONS =======================================================================
 // =====================================================================================================================================
+// click start game button
+$("#start").on("click", function () {
+    // hide start button
+    $("#start").hide();
+    // play game
 
-// playGame(); 
+})
 
-// displayQuestion();
+// function to play game
+// function playGame() {
+
+// } 
+
+// function to display questions
+function displayQuestion() {
+
+    // display question 
+    $("#show-question").html("<b>" + questionsArray[i].question + "</b>");
+
+    // iterate through answers and display to html
+    // for (var i = 0; i < questionsArray.answers.length; i++) {}
+
+}
+
+// function to display answers?
+function displayAnswers() {
+
+    // iterate through answers and display to html
+    for (var i = 0; i < questionsArray.answers.length; i++) {
+        // create a div
+        var answerChoice = $("<div>");
+        // add class to div
+        answerChoice.addClass("answerChoice");
+        // add attribute to check answer
+
+        // html content
+        answerChoice.html(questionsArray.answers[i]);
+        // append content to html
+        $("#show-possible-answers").append(answerChoice);
+
+    }
+
+}
 
 // evaluatePlayerAnswer();
+// $(".answerChoice").on("click", function () {
+
+// })
 
 // resetGame();
 
@@ -71,13 +114,32 @@ var isClockRunning = false;
 // Timers 
 
 // function to start timer
-// runTimer();
+// startTimer();
+function startTimer () {
+    if (!isClockRunning) {
+        intervalId = setInterval(decrement, 1000);
+        isClockRunning = true;
+    }
+}
 
 // function to set pace of timer
 // decrement();
+function decrement () {    
+    timer--;
+    $("#countdown-timer").html("<h2>" + timer + "</h2>");
+    if (timer === 0) {
+        stopTimer();
+        // display question is wrong 
+        // display correct answer and gif
+        // display next question
+    }
+}
 
 // function to stop timer
 // stopTimer();
+function stopTimer() {
+    clearInterval(intervalId);
+}
 
 // =====================================================================================================================================
 // ================================================== PLAY GAME  =======================================================================
