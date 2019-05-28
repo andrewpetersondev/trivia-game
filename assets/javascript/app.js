@@ -94,74 +94,23 @@ function displayQuestion() {
         // call showImage ();
     }
 
-
-
-    // iterate through questions and display to html
-    // for (var i = 0; i < questions.length; i++) {
-
-        // display question 
-        // $("#show-question").html("<h2>" + questions[i].question + "</h2>");
-
-        // var questionChoice = $("<div>");
-        // questionChoice.addClass("questionChoice");
-        // questionChoice.html(questions[j].question[j]);
-        // $("#show-question").append(questionChoice);
-
-
-        // // iterate through answers and display to html
-        // for (var i = 0; i < questions[i].answers.length; i++) {
-
-        //     // create a div
-        //     var answerChoice = $("<div>");
-        //     // add class to div
-        //     answerChoice.addClass("answerChoice");
-        //     // add attribute to check answer
-
-        //     // html content
-        //     answerChoice.html(questions[i].answers[i]);
-        //     // append content to html
-        //     $("#show-possible-answers").append(answerChoice);
-
-        // }
-    // }
-    // iterate through answers and display to html
-    // for (var j = 0; j < questions[j].answers.length; j++) {
-
-    //     // create a div
-    //     var answerChoice = $("<div>");
-    //     // add class to div
-    //     answerChoice.addClass("answerChoice");
-    //     // add attribute to check answer
-
-    //     // html content
-    //     answerChoice.html(questions[j].answers[j]);
-    //     // append content to html
-    //     $("#show-possible-answers").append(answerChoice);
-
-    // }
-
 }
 
 // function to display answers?
-function displayAnswers() {
-
-    // iterate through answers and display to html
-    for (var i = 0; i < questions[i].answers.length; i++) {
-
-        // create a div
-        var answerChoice = $("<div>");
-        // add class to div
-        answerChoice.addClass("answerChoice");
-        // add attribute to check answer
-
-        // html content
-        answerChoice.html(questions[i].answers[i]);
-        // append content to html
-        $("#show-possible-answers").append(answerChoice);
-
-    }
-
-}
+// function displayAnswers() {
+//     // iterate through answers and display to html
+//     for (var i = 0; i < questions[i].answers.length; i++) {
+//         // create a div
+//         var answerChoice = $("<div>");
+//         // add class to div
+//         answerChoice.addClass("answerChoice");
+//         // add attribute to check answer
+//         // html content
+//         answerChoice.html(questions[i].answers[i]);
+//         // append content to html
+//         $("#show-possible-answers").append(answerChoice);
+//     }
+// }
 
 // evaluatePlayerAnswer();
 // $(".answerChoice").on("click", function () {
