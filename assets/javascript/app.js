@@ -108,7 +108,7 @@ function displayAnswers() {
 
 // })
 
-// resetGame();
+// replayGame();
 
 
 // Timers 
@@ -117,6 +117,7 @@ function displayAnswers() {
 // startTimer();
 function startTimer () {
     if (!isClockRunning) {
+        clearInterval(intervalId);
         intervalId = setInterval(decrement, 1000);
         isClockRunning = true;
     }
