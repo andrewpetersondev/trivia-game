@@ -2,56 +2,56 @@
 // ================================================== GLOBAL VARIABLES =================================================================
 // =====================================================================================================================================
 
-var questionsArray = [
+var questions = [
     {
         question: "What is the most populated city on Earth?",
         answers: ["A. Shanghai", "B. New York", "C. Istanbul", "D. Beijing"],
-        correctAnswer: "Shanghai",
+        correctAnswer: 0, // "Shanghai",
         animate: "https://giphy.com/gifs/earthhour-china-shanghai-connect2earth-bc1Fkp0WkSdKdEyD8X"
     },
     {
         question: "What country is Stonehenge located in?",
         answers: ["A. China", "B. Germany", "C. England", "D. France"],
-        correctAnswer: "England",
+        correctAnswer: 2, // "England",
         animate: "https://giphy.com/gifs/stonehenge-cidade-alm-vTELC7UdPZ8be"
     },
     {
         question: "Which of the following cities is furthest east?",
         answers: ["A. Boston", "B. San Juan", "C. Miami", "D. New York"],
-        correctAnswer: "San Juan",
+        correctAnswer: 1, // "San Juan",
         animate: "https://giphy.com/gifs/history-uUmZKHjgUsROM"
     },
     {
         question: "What is the only city in the United States to have a royal palace?",
         answers: ["A. Salt Lake City", "B. Portland", "C. Boston", "D. Honolulu"],
-        correctAnswer: "Honolulu",
+        correctAnswer: 3, // "Honolulu",
         animate: "https://giphy.com/gifs/hawaii-honolulu-60rrYCp4ox5gidUgNq"
     },
     {
         question: "What is statistically the safest way to travel?",
         answers: ["A. Car", "B. Train", "C. Plane", "D. Boat"],
-        correctAnswer: "Plane",
+        correctAnswer: 2, // "Plane",
         animate: "https://giphy.com/gifs/indiana-jones-sean-connery-the-last-crusade-ms8sgwQuPpIQg"
     },
     {
         question: "Which country contains 60% of the world's lakes?",
         answers: ["A. Canada", "B. USA", "C. Russia", "D. China"],
-        correctAnswer: "Canada",
+        correctAnswer: 0, // "Canada",
         animate: "https://giphy.com/gifs/day-canada-tuesday-Pldo6KZZ7bUe4"
     },
     {
         question: "An average person in which country consumes 22 pounds of chocalate every year?",
         answers: ["A. USA", "B. France", "C. Belgium", "D. Switzerland"],
-        correctAnswer: "Switzerland",
+        correctAnswer: 3, // "Switzerland",
         animate: "https://giphy.com/gifs/taucherli-switzerland-swiss-schweiz-1kTKNxETigp5hwDohf"
-    },
+    }
 ]
 
 var correctAnswerCount = 0;
 var incorrectAnswerCount = 0;
-var unAnswerCount = 0;
+var unAnswerCount = questions.length; // = 0;
 var index = 0;
-var timer = 15;
+var timer = 30;
 var intervalId;
 var isClockRunning = false;
 var userGuess;
@@ -59,27 +59,86 @@ var userGuess;
 // =====================================================================================================================================
 // ================================================== FUNCTIONS =======================================================================
 // =====================================================================================================================================
-// click start game button
-$("#start").on("click", function () {
-    // hide start button
-    $("#start").hide();
-    // play game
 
-})
-
-// function to play game
+// function to start game
 // function playGame() {
-
 // } 
 
 // function to display questions
 function displayQuestion() {
 
-    // display question 
-    $("#show-question").html("<b>" + questionsArray[i].question + "</b>");
+    // if we are not at the last question display the next question (// if index != questions.length - 1)
+    if (index !== questions.length - 1) {
+        // display the next question and answers
+        // display the next question by targeting $("#show-question");
+        $("#show-question").html("<h2>" + questions[index].question + "</h2>");
 
+        // display the next question's answers by targeting $("#show-possible-answers");
+        // iterate through answers and display to html
+        for (var i = 0; i < questions[index].answers.length; i++) {
+
+            // create a div
+            var answerChoice = $("<div>");
+            // add class to div
+            answerChoice.addClass("answerChoice");
+            // add attribute to check answer
+
+            // html content
+            answerChoice.html(questions[index].answers[i]);
+            // append content to html
+            $("#show-possible-answers").append(answerChoice);
+
+        }
+        // increment index position
+        index++;
+        // call showImage ();
+    }
+
+
+
+    // iterate through questions and display to html
+    // for (var i = 0; i < questions.length; i++) {
+
+        // display question 
+        // $("#show-question").html("<h2>" + questions[i].question + "</h2>");
+
+        // var questionChoice = $("<div>");
+        // questionChoice.addClass("questionChoice");
+        // questionChoice.html(questions[j].question[j]);
+        // $("#show-question").append(questionChoice);
+
+
+        // // iterate through answers and display to html
+        // for (var i = 0; i < questions[i].answers.length; i++) {
+
+        //     // create a div
+        //     var answerChoice = $("<div>");
+        //     // add class to div
+        //     answerChoice.addClass("answerChoice");
+        //     // add attribute to check answer
+
+        //     // html content
+        //     answerChoice.html(questions[i].answers[i]);
+        //     // append content to html
+        //     $("#show-possible-answers").append(answerChoice);
+
+        // }
+    // }
     // iterate through answers and display to html
-    // for (var i = 0; i < questionsArray.answers.length; i++) {}
+    // for (var j = 0; j < questions[j].answers.length; j++) {
+
+    //     // create a div
+    //     var answerChoice = $("<div>");
+    //     // add class to div
+    //     answerChoice.addClass("answerChoice");
+    //     // add attribute to check answer
+
+    //     // html content
+    //     answerChoice.html(questions[j].answers[j]);
+    //     // append content to html
+    //     $("#show-possible-answers").append(answerChoice);
+
+    // }
 
 }
 
@@ -87,7 +146,8 @@ function displayQuestion() {
 function displayAnswers() {
 
     // iterate through answers and display to html
-    for (var i = 0; i < questionsArray.answers.length; i++) {
+    for (var i = 0; i < questions[i].answers.length; i++) {
+
         // create a div
         var answerChoice = $("<div>");
         // add class to div
@@ -95,7 +155,7 @@ function displayAnswers() {
         // add attribute to check answer
 
         // html content
-        answerChoice.html(questionsArray.answers[i]);
+        answerChoice.html(questions[i].answers[i]);
         // append content to html
         $("#show-possible-answers").append(answerChoice);
 
@@ -115,7 +175,7 @@ function displayAnswers() {
 
 // function to start timer
 // startTimer();
-function startTimer () {
+function startTimer() {
     if (!isClockRunning) {
         clearInterval(intervalId);
         intervalId = setInterval(decrement, 1000);
@@ -125,11 +185,12 @@ function startTimer () {
 
 // function to set pace of timer
 // decrement();
-function decrement () {    
+function decrement() {
     timer--;
     $("#countdown-timer").html("<h2>" + timer + "</h2>");
     if (timer === 0) {
         stopTimer();
+        unAnswerCount++;
         // display question is wrong 
         // display correct answer and gif
         // display next question
@@ -149,6 +210,17 @@ function stopTimer() {
 // $(document).ready(function () {
 //     // code goes here
 // });
+
+// click start game button
+$("#start").on("click", function () {
+    $("#start").hide();
+    startTimer();
+    // play game
+    displayQuestion();
+    // displayAnswers();
+
+
+})
 
 // ================================== PSUEDOCODE ========================================================= 
 
