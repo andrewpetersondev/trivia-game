@@ -45,7 +45,7 @@ var questions = [
         correctAnswer: 3, // "Switzerland",
         animate: "https://giphy.com/gifs/taucherli-switzerland-swiss-schweiz-1kTKNxETigp5hwDohf"
     }
-]
+];
 
 var correctAnswerCount = 0;
 var incorrectAnswerCount = 0;
@@ -61,15 +61,41 @@ var userGuess;
 // =====================================================================================================================================
 
 // function to start game
-// function playGame() {
-// } 
+function playGame() {
+    // display the next question by targeting $("#show-question");
+    $("#show-question").html("<h2>" + questions[index].question + "</h2>");
+
+    // display the next question's answers by targeting $("#show-possible-answers");
+    // iterate through answers and display to html
+    for (var i = 0; i < questions[index].answers.length; i++) {
+
+        // create a div
+        var answerChoice = $("<div>");
+        // add class to div
+        answerChoice.addClass("answerChoice");
+        // add attribute to check answer
+        answerChoice.attr("data-guess-value", i);
+        console.log(answerChoice);
+        // html content
+        answerChoice.html(questions[index].answers[i]);
+        // append content to html
+        $("#show-possible-answers").append(answerChoice);
+
+    }
+} 
+
+
+// function showImage () {
+
+// }
 
 // function to display questions
-function displayQuestion() {
+function displayNextQuestion() {
 
     // if we are not at the last question display the next question (// if index != questions.length - 1)
-    if (index !== questions.length - 1) {
-        // display the next question and answers
+    // i think this should be broken up into two or more functions
+    // if (index !== questions.length - 1) {
+
         // display the next question by targeting $("#show-question");
         $("#show-question").html("<h2>" + questions[index].question + "</h2>");
 
@@ -82,7 +108,8 @@ function displayQuestion() {
             // add class to div
             answerChoice.addClass("answerChoice");
             // add attribute to check answer
-
+            answerChoice.attr("data-guess-value", i);
+            console.log(answerChoice);
             // html content
             answerChoice.html(questions[index].answers[i]);
             // append content to html
@@ -90,37 +117,42 @@ function displayQuestion() {
 
         }
         // increment index position
-        index++;
+        // index++;
         // call showImage ();
-    }
+    // }
 
 }
 
-// function to display answers?
-// function displayAnswers() {
-//     // iterate through answers and display to html
-//     for (var i = 0; i < questions[i].answers.length; i++) {
-//         // create a div
-//         var answerChoice = $("<div>");
-//         // add class to div
-//         answerChoice.addClass("answerChoice");
-//         // add attribute to check answer
-//         // html content
-//         answerChoice.html(questions[i].answers[i]);
-//         // append content to html
-//         $("#show-possible-answers").append(answerChoice);
-//     }
-// }
+// function correctAnswerFunction () {}
 
 // evaluatePlayerAnswer();
-// $(".answerChoice").on("click", function () {
+function evaluatePlayerAnswer() {
 
-// })
+    // user clicks an answer
+    $(".answerChoice").on("click", function () {
+        // store their answer in a variable
+        userGuess = parseInt($(this).attr("data-guess-value"));
+        alert(userGuess);
+        // if user input === correct answer
+        if (userGuess === questions[index].correctAnswer) {
+            correctAnswerCount++;
+            stopTimer();
+            // clear userGuess
+            // userGuess;
+            console.log("Correct! : " + questions[index].correctAnswer);
+        } else {
+            console.log("Wrong!! Correct Answer Position : " + questions[index].correctAnswer);
+        }
+    })
+};
+
+
+
 
 // replayGame();
 
 
-// Timers 
+// ================================================ TIMERS ==========================================================================================
 
 // function to start timer
 // startTimer();
@@ -141,6 +173,7 @@ function decrement() {
         stopTimer();
         unAnswerCount++;
         // display question is wrong 
+        incorrectAnswerCount++;
         // display correct answer and gif
         // display next question
     }
@@ -156,20 +189,26 @@ function stopTimer() {
 // ================================================== PLAY GAME  =======================================================================
 // =====================================================================================================================================
 
-// $(document).ready(function () {
-//     // code goes here
-// });
+$(document).ready(function () {
+    // click start game button
+    $("#start").on("click", function () {
+        console.log(index);
+        $("#start").hide();
+        startTimer();
+        playGame();
+        // console.log(questions[index].correctAnswer);
+        // displayQuestion();
+        // displayAnswers();
+        $(".answerChoice").on("click", function () {
+            evaluatePlayerAnswer();
+        })
+        // console.log(questions[index].correctAnswer);
+    })
 
-// click start game button
-$("#start").on("click", function () {
-    $("#start").hide();
-    startTimer();
-    // play game
-    displayQuestion();
-    // displayAnswers();
-
-
-})
+    // $(".answerChoice").on("click", function () {
+    //     evaluatePlayerAnswer();
+    // })
+});
 
 // ================================== PSUEDOCODE ========================================================= 
 
