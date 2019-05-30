@@ -1,216 +1,194 @@
-// =====================================================================================================================================
-// ================================================== GLOBAL VARIABLES =================================================================
-// =====================================================================================================================================
+$(document).ready(function () {
 
-var questions = [
-    {
-        question: "What is the most populated city on Earth?",
-        answers: ["Shanghai", "New York", "Istanbul", "Beijing"],
-        correctAnswer: 0, // "Shanghai",
-        animate: "https://giphy.com/gifs/earthhour-china-shanghai-connect2earth-bc1Fkp0WkSdKdEyD8X"
-    },
-    {
-        question: "What country is Stonehenge located in?",
-        answers: ["China", "Germany", "England", "France"],
-        correctAnswer: 2, // "England",
-        animate: "https://giphy.com/gifs/stonehenge-cidade-alm-vTELC7UdPZ8be"
-    },
-    {
-        question: "Which of the following cities is furthest east?",
-        answers: ["Boston", "San Juan", "Miami", "New York"],
-        correctAnswer: 1, // "San Juan",
-        animate: "https://giphy.com/gifs/history-uUmZKHjgUsROM"
-    },
-    {
-        question: "What is the only city in the United States to have a royal palace?",
-        answers: ["Salt Lake City", "Portland", "Boston", "Honolulu"],
-        correctAnswer: 3, // "Honolulu",
-        animate: "https://giphy.com/gifs/hawaii-honolulu-60rrYCp4ox5gidUgNq"
-    },
-    {
-        question: "What is statistically the safest way to travel?",
-        answers: ["Car", "Train", "Plane", "Boat"],
-        correctAnswer: 2, // "Plane",
-        animate: "https://giphy.com/gifs/indiana-jones-sean-connery-the-last-crusade-ms8sgwQuPpIQg"
-    },
-    {
-        question: "Which country contains 60% of the world's lakes?",
-        answers: ["Canada", "USA", "Russia", "China"],
-        correctAnswer: 0, // "Canada",
-        animate: "https://giphy.com/gifs/day-canada-tuesday-Pldo6KZZ7bUe4"
-    },
-    {
-        question: "An average person in which country consumes 22 pounds of chocalate every year?",
-        answers: ["USA", "France", "Belgium", "Switzerland"],
-        correctAnswer: 3, // "Switzerland",
-        animate: "https://giphy.com/gifs/taucherli-switzerland-swiss-schweiz-1kTKNxETigp5hwDohf"
+    // ================================================== GLOBAL VARIABLES =================================================================
+    // =====================================================================================================================================
+
+    var questions = [
+        {
+            question: "What is the most populated city on Earth?",
+            answers: ["Shanghai", "New York", "Istanbul", "Beijing"],
+            correctAnswer: 0, // "Shanghai",
+            animate: "https://giphy.com/gifs/earthhour-china-shanghai-connect2earth-bc1Fkp0WkSdKdEyD8X"
+        },
+        {
+            question: "What country is Stonehenge located in?",
+            answers: ["China", "Germany", "England", "France"],
+            correctAnswer: 2, // "England",
+            animate: "https://giphy.com/gifs/stonehenge-cidade-alm-vTELC7UdPZ8be"
+        },
+        {
+            question: "Which of the following cities is furthest east?",
+            answers: ["Boston", "San Juan", "Miami", "New York"],
+            correctAnswer: 1, // "San Juan",
+            animate: "https://giphy.com/gifs/history-uUmZKHjgUsROM"
+        },
+        {
+            question: "What is the only city in the United States to have a royal palace?",
+            answers: ["Salt Lake City", "Portland", "Boston", "Honolulu"],
+            correctAnswer: 3, // "Honolulu",
+            animate: "https://giphy.com/gifs/hawaii-honolulu-60rrYCp4ox5gidUgNq"
+        },
+        {
+            question: "What is statistically the safest way to travel?",
+            answers: ["Car", "Train", "Plane", "Boat"],
+            correctAnswer: 2, // "Plane",
+            animate: "https://giphy.com/gifs/indiana-jones-sean-connery-the-last-crusade-ms8sgwQuPpIQg"
+        },
+        {
+            question: "Which country contains 60% of the world's lakes?",
+            answers: ["Canada", "USA", "Russia", "China"],
+            correctAnswer: 0, // "Canada",
+            animate: "https://giphy.com/gifs/day-canada-tuesday-Pldo6KZZ7bUe4"
+        },
+        {
+            question: "An average person in which country consumes 22 pounds of chocalate every year?",
+            answers: ["USA", "France", "Belgium", "Switzerland"],
+            correctAnswer: 3, // "Switzerland",
+            animate: "https://giphy.com/gifs/taucherli-switzerland-swiss-schweiz-1kTKNxETigp5hwDohf"
+        }
+    ];
+
+    var correctAnswerCount = 0;
+    var incorrectAnswerCount = 0;
+    var unAnswerCount = questions.length; // = 0;
+    var index = 0;
+    var timer = 30;
+    var intervalId;
+    var isClockRunning = false;
+    var userGuess;
+
+    // ================================================== FUNCTIONS =======================================================================
+    // =====================================================================================================================================
+
+    // when the player starts the game run these functions
+    $("#start").on("click", function() {
+        startGame();
+        // insert player chooses an answer click event to see if anything logs to the console // this worked to display to console but game is still broken
+        $(".answerChoice").on("click", function () {
+            evaluatePlayerAnswer();
+        })
+    });
+
+    function startGame() {
+        $("#start").hide();
+        displayQuestion();
     }
-];
 
-var correctAnswerCount = 0;
-var incorrectAnswerCount = 0;
-var unAnswerCount = questions.length; // = 0;
-var index = 0;
-var timer = 30;
-var intervalId;
-var isClockRunning = false;
-var userGuess;
+    function displayQuestion() {
+        // 1. start timer
+        // 2. display question
+        // 3. display possible answers
 
-// =====================================================================================================================================
-// ================================================== FUNCTIONS =======================================================================
-// =====================================================================================================================================
+        startTimer();
 
-// this should be changed since the game is started with a button click
-// the first function should be display question
-// function to start game
-function startGame() {
+        $("#show-question").html("<h2>" + questions[index].question + "</h2>");
 
-    $("#show-question").html("<h2>" + questions[index].question + "</h2>");
+        for (var i = 0; i < questions[index].answers.length; i++) {
 
-    for (var i = 0; i < questions[index].answers.length; i++) {
+            var answerChoice = $("<div>");
 
-        var answerChoice = $("<div>");
+            answerChoice.addClass("answerChoice");
 
-        answerChoice.addClass("answerChoice");
+            answerChoice.attr("data-guess-value", i); // according to chrome dev tools, this is stored as a string
 
-        answerChoice.attr("data-guess-value", i);
+            answerChoice.html(questions[index].answers[i]);
 
-        // console.log(answerChoice);
+            $("#show-possible-answers").append(answerChoice);
 
-        answerChoice.html(questions[index].answers[i]);
+        }
 
-        $("#show-possible-answers").append(answerChoice);
+        // console.log("the correct answer is at position : " + questions[index].correctAnswer);
 
     }
-}
 
-// evaluatePlayerAnswer();
-function evaluatePlayerAnswer() {
 
+    // when the player chooses an answer run these functions
+    // should this be nested in the function on line 66?
     $(".answerChoice").on("click", function () {
+        evaluatePlayerAnswer();
+    })
+
+    function evaluatePlayerAnswer () {
+        // 1. store player answer as number
+        // 2. if player answer is correct then ...
+        // 3. if the player is wrong then ... 
 
         userGuess = parseInt($(this).attr("data-guess-value"));
 
-        // alert(userGuess);
-
+        // check the type of correctAnswer variable
+        console.log("Type of correctAnswer variable : " + typeof(questions[index].correctAnswer)); // logs number
+        
+        // check the type of user guess variable
+        console.log("Type of userGuess variable : " + typeof(userGuess)); // logs number
+        
+        // check user guess variable
+        console.log("userGuess = " + userGuess); // logs NaN
+        
         if (userGuess === questions[index].correctAnswer) {
             correctAnswerCount++;
             stopTimer();
-            // clear userGuess?
             // userGuess;
             console.log("Correct! : " + questions[index].correctAnswer);
         }
         else {
-            console.log("Wrong!! Correct Answer Position : " + questions[index].correctAnswer);
+            console.log("Wrong!! Correct Answer Position is : " + questions[index].correctAnswer);
+            incorrectAnswerCount++;
         }
 
-    })
+    }
 
-};
 
-// function correctAnswerFunction () {}
 
-// function showImage () { // }
+    // function correctAnswerFunction () {}
 
-// function to display questions
-function displayNextQuestion() {
+    function showImage () { 
+        // 1. if user guessed correct show ... (Correct! And show the gif of the correct answer)
+        // 2. if user guessed incorrect show ... (Nope! The correct answer was : questions[index].correctAnswer. And show gif of correct answer)
+        // 3. if time runs out show ... (Out of time! The correct answer was : questions[index].correctAnswer. And show gif of correct answer)
+     }
 
-    // if we are not at the last question display the next question (// if index != questions.length - 1)
-    // i think this should be broken up into two or more functions
-    // if (index !== questions.length - 1) {
+    // replayGame();
 
-    $("#show-question").html("<h2>" + questions[index].question + "</h2>");
 
-    for (var i = 0; i < questions[index].answers.length; i++) {
+    // ================================================ TIMERS ==========================================================================================
 
-        var answerChoice = $("<div>");
+    // function to start timer
+    function startTimer() {
 
-        answerChoice.addClass("answerChoice");
+        if (!isClockRunning) {
 
-        answerChoice.attr("data-guess-value", i);
+            clearInterval(intervalId);
 
-        // console.log(answerChoice);
+            intervalId = setInterval(decrement, 1000);
 
-        answerChoice.html(questions[index].answers[i]);
+            isClockRunning = true;
 
-        $("#show-possible-answers").append(answerChoice);
+        }
+    }
+
+    // function to set pace of timer
+    function decrement() {
+
+        timer--;
+
+        $("#countdown-timer").html("<h2> Time Remaining: " + timer + " Seconds </h2>");
+
+        if (timer === 0) {
+            stopTimer();
+            unAnswerCount++;
+            // display question is wrong 
+            incorrectAnswerCount++;
+            // display correct answer and gif
+
+        }
 
     }
-    // increment index position
-    // index++;
-    // call showImage ();
-    // }
 
-}
-
-
-
-
-// replayGame();
-
-
-// ================================================ TIMERS ==========================================================================================
-
-// function to start timer
-function startTimer() {
-    if (!isClockRunning) {
+    // function to stop timer
+    function stopTimer() {
         clearInterval(intervalId);
-        intervalId = setInterval(decrement, 1000);
-        isClockRunning = true;
     }
-}
-
-// function to set pace of timer
-function decrement() {
-    timer--;
-    $("#countdown-timer").html("<h2> Time Remaining: " + timer + " Seconds </h2>");
-    if (timer === 0) {
-        stopTimer();
-        unAnswerCount++;
-        // display question is wrong 
-        incorrectAnswerCount++;
-        // display correct answer and gif
-    }
-}
-
-// function to stop timer
-function stopTimer() {
-    clearInterval(intervalId);
-}
-
-// =====================================================================================================================================
-// ================================================== PLAY GAME  =======================================================================
-// =====================================================================================================================================
-
-$(document).ready(function () {
-
-    $("#start").on("click", function () {
-    
-        // console.log(index);
-    
-        $("#start").hide();
-    
-        startTimer();
-    
-        startGame();
-    
-        // console.log(questions[index].correctAnswer);
-    
-        // displayQuestion();
-    
-        // displayAnswers();
-    
-        $(".answerChoice").on("click", function () {
-            evaluatePlayerAnswer();
-        })
-    
-        // console.log(questions[index].correctAnswer);
-    
-    })
-
-    // $(".answerChoice").on("click", function () {
-    //     evaluatePlayerAnswer();
-    // })
 
 });
 
+    // ================================================== PLAY GAME  =======================================================================
