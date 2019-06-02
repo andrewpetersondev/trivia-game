@@ -73,8 +73,8 @@ function startGame() {
 function displayQuestion() {
     startTimer();
     $("#show-question").html("<h2>" + questions[index].question + "</h2>");
-    console.log("current question = " + questions[index].question);
-    // $("#show-possible-answers").empty();
+    // console.log("current question = " + questions[index].question);
+    $("#show-possible-answers").empty();
     for (var i = 0; i < questions[index].answers.length; i++) {
         var answerChoice = $("<div>");
         answerChoice.addClass("answerChoice");
