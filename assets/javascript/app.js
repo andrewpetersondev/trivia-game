@@ -71,7 +71,9 @@ function startGame() {
 }
 
 function displayQuestion() {
+    $("#solution").hide();
     startTimer();
+    $("#game-display").show();
     $("#show-question").html("<h2>" + questions[index].question + "</h2>");
     // console.log("current question = " + questions[index].question);
     $("#show-possible-answers").empty();
@@ -105,11 +107,15 @@ function evaluatePlayerAnswer() {
 function showSolution() {
     // 1. if user guessed correct show ... (Correct! And show the gif of the correct answer)
     $("#game-display").hide();
-    $("#solution").show();
     var correctAnswer = questions[index].answers[questions[index].correctAnswer];
-    $("#solution").append("the correct answer is : " + correctAnswer);
+    // console.log("correct answer = " + correctAnswer);
+    $("#solution").html("correct answer = " + correctAnswer);
+    $("#solution").append("You are Correct! " + correctAnswer);
     // 2. if user guessed incorrect show ... (Nope! The correct answer was : questions[index].correctAnswer. And show gif of correct answer)
+    $("#solution").append("Wrong ! the correct answer is : " + correctAnswer);
     // 3. if time runs out show ... (Out of time! The correct answer was : questions[index].correctAnswer. And show gif of correct answer)
+    $("#solution").append("You ran out of time ! the correct answer is : " + correctAnswer);
+    $("#solution").show();
 }
 
 function startTimer() {
@@ -126,7 +132,7 @@ function decrement() {
     $("#timer").html("<h2> Time Remaining: " + timer + " Seconds </h2>");
     if (timer === 0) {
         // stopTimer();
-        // showSolution();
+        showSolution();
         unAnswerCount++;
         index++;
         displayQuestion();
@@ -149,4 +155,5 @@ $("#start").on("click", function () {
 
 $(".answerChoice").on("click", function () {
     evaluatePlayerAnswer();
+    displayQuestion();
 })
