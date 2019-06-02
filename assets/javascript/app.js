@@ -1,5 +1,4 @@
 // ================================================== GLOBAL VARIABLES =================================================================
-// =====================================================================================================================================
 
 var questions = [
     {
@@ -49,64 +48,60 @@ var questions = [
 // variables for counting
 var correctAnswerCount = 0;
 var incorrectAnswerCount = 0;
-var unAnswerCount = questions.length; // = 0;
+var unAnswerCount = questions.length - index; // = 0;
 var index = 0;
 // variables for timer
 var timer = 5;
 var intervalId;
 var isClockRunning = false;
-// variables for 
-var userGuess;
-$("#solution").hide();
+
+// var userGuess;
 
 // ================================================== FUNCTIONS =======================================================================
-// =====================================================================================================================================
+// function initializeGame() {
+//     // select div you want data to display in
+//     var gameDisplay = $("#game-display");
+//     // display the first question
+//     for (var i = 0; i < questions.length; i++) {
+//         var questionAnswerDiv = $("<div>");
+//         gameDisplay.html(questionAnswerDiv);
+//         var questionDiv = $("<div>" + questions[i].question + "</div>");
+//         questionDiv.addClass("question");
+//         questionAnswerDiv.append(questionDiv);
+//     }
+// }
 
 function startGame() {
+    index = 0;
+    correctAnswerCount = 0;
+    incorrectAnswerCount = 0;
+    unAnswerCount = questions.length - index;
     displayQuestion();
 }
 
 function displayQuestion() {
-
-    // 1. start timer
     startTimer();
-    $("#countdown-timer").html("<h2> Time Remaining: " + timer + " Seconds </h2>");
-
-    // 2. display question
+    $("#timer").html("<h2> Time Remaining: " + timer + " Seconds </h2>");
     $("#show-question").html("<h2>" + questions[index].question + "</h2>");
-
     $("#show-possible-answers").empty();
-    // 3. display possible answers
     for (var i = 0; i < questions[index].answers.length; i++) {
-
         var answerChoice = $("<div>");
-
         answerChoice.addClass("answerChoice");
-
-        answerChoice.attr("data-guess-value", i); // according to chrome dev tools, this is stored as a string
-
+        answerChoice.attr("data-guess-value", i); // typeof i = string
         answerChoice.html(questions[index].answers[i]);
-
         answerChoice.click(evaluatePlayerAnswer);
-
         $("#show-possible-answers").append(answerChoice);
-
     }
-
     // console.log("the correct answer is at position : " + questions[index].correctAnswer);
-
 }
 
 function evaluatePlayerAnswer() {
-
     // 1. store player answer as number
     userGuess = parseInt($(this).attr("data-guess-value"));
-
     // check the type of correctAnswer variable , check the type of user guess variable , check user guess variable
     // console.log("Type of correctAnswer variable : " + typeof (questions[index].correctAnswer)); // logs number
     // console.log("Type of userGuess variable : " + typeof (userGuess)); // logs number
     // console.log("userGuess = " + userGuess); // logs number
-
     // 2. if player answer is correct then ...
     if (userGuess === questions[index].correctAnswer) {
         correctAnswerCount++;
@@ -119,7 +114,6 @@ function evaluatePlayerAnswer() {
         console.log("Wrong!! Correct Answer Position is : " + questions[index].correctAnswer);
         incorrectAnswerCount++;
     }
-
 }
 
 function showSolution() {
@@ -128,8 +122,6 @@ function showSolution() {
     $("#solution").show();
     var correctAnswer = questions[index].answers[questions[index].correctAnswer];
     $("#solution").append("the correct answer is : " + correctAnswer);
-
-
     // 2. if user guessed incorrect show ... (Nope! The correct answer was : questions[index].correctAnswer. And show gif of correct answer)
     // 3. if time runs out show ... (Out of time! The correct answer was : questions[index].correctAnswer. And show gif of correct answer)
 }
@@ -141,13 +133,7 @@ function displayNextQuestion() {
     }
 }
 
-function replayGame() {
 
-}
-
-// ================================================ TIMERS ==========================================================================================
-
-// function to start timer
 function startTimer() {
     // if (!isClockRunning) {
     clearInterval(intervalId);
@@ -156,10 +142,9 @@ function startTimer() {
     // }
 }
 
-// function to set pace of timer
 function decrement() {
     timer--;
-    $("#countdown-timer").html("<h2> Time Remaining: " + timer + " Seconds </h2>");
+    $("#timer").html("<h2> Time Remaining: " + timer + " Seconds </h2>");
     if (timer === 0) {
         stopTimer();
         showSolution();
@@ -167,29 +152,25 @@ function decrement() {
         timer = 5;
         startTimer();
         displayQuestion();
-        
-
         unAnswerCount++;
-        // display question is wrong 
         incorrectAnswerCount++;
-        // display correct answer and gif
     }
 }
 
-// function to stop timer
 function stopTimer() {
     clearInterval(intervalId);
 }
 
 // ================================================== PLAY GAME  =======================================================================
+$("#solution").hide();
 
-// click start button to start game
+$("#restart").hide();
+
 $("#start").on("click", function () {
     $("#start").hide();
     startGame();
 })
 
-// when the player chooses an answer run these functions
 $(".answerChoice").on("click", function () {
     evaluatePlayerAnswer();
 })
