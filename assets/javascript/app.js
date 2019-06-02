@@ -85,7 +85,6 @@ function displayQuestion() {
         answerChoice.click(evaluatePlayerAnswer);
         $("#show-possible-answers").append(answerChoice);
     }
-    // console.log("the correct answer is at position : " + questions[index].correctAnswer);
 }
 
 function evaluatePlayerAnswer() {
@@ -155,5 +154,10 @@ $("#start").on("click", function () {
 
 $(".answerChoice").on("click", function () {
     evaluatePlayerAnswer();
+})
+
+$(document).on("click", function () {
+    evaluatePlayerAnswer();
     displayQuestion();
 })
+
