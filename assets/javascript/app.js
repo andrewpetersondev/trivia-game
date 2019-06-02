@@ -48,42 +48,33 @@ var questions = [
 // variables for counting
 var correctAnswerCount = 0;
 var incorrectAnswerCount = 0;
-var unAnswerCount = questions.length - index; // = 0;
+var unAnswerCount = 0;
 var index = 0;
 // variables for timer
-var timer = 5;
+var timer = 05;
 var intervalId;
 var isClockRunning = false;
 
 // var userGuess;
 
 // ================================================== FUNCTIONS =======================================================================
-// function initializeGame() {
-//     // select div you want data to display in
-//     var gameDisplay = $("#game-display");
-//     // display the first question
-//     for (var i = 0; i < questions.length; i++) {
-//         var questionAnswerDiv = $("<div>");
-//         gameDisplay.html(questionAnswerDiv);
-//         var questionDiv = $("<div>" + questions[i].question + "</div>");
-//         questionDiv.addClass("question");
-//         questionAnswerDiv.append(questionDiv);
-//     }
-// }
 
 function startGame() {
     index = 0;
     correctAnswerCount = 0;
     incorrectAnswerCount = 0;
-    unAnswerCount = questions.length - index;
+    unAnswerCount = 0;
+    timer = 05;
+    intervalId;
+    isClockRunning = false;
     displayQuestion();
 }
 
 function displayQuestion() {
     startTimer();
-    $("#timer").html("<h2> Time Remaining: " + timer + " Seconds </h2>");
     $("#show-question").html("<h2>" + questions[index].question + "</h2>");
-    $("#show-possible-answers").empty();
+    console.log("current question = " + questions[index].question);
+    // $("#show-possible-answers").empty();
     for (var i = 0; i < questions[index].answers.length; i++) {
         var answerChoice = $("<div>");
         answerChoice.addClass("answerChoice");
@@ -96,22 +87,17 @@ function displayQuestion() {
 }
 
 function evaluatePlayerAnswer() {
-    // 1. store player answer as number
     userGuess = parseInt($(this).attr("data-guess-value"));
-    // check the type of correctAnswer variable , check the type of user guess variable , check user guess variable
     // console.log("Type of correctAnswer variable : " + typeof (questions[index].correctAnswer)); // logs number
     // console.log("Type of userGuess variable : " + typeof (userGuess)); // logs number
     // console.log("userGuess = " + userGuess); // logs number
-    // 2. if player answer is correct then ...
     if (userGuess === questions[index].correctAnswer) {
         correctAnswerCount++;
         stopTimer();
-        // userGuess;
-        console.log("Correct! : " + questions[index].correctAnswer);
+        // console.log("Correct! : " + questions[index].correctAnswer);
     }
-    // 3. if the player is wrong then ... 
     else {
-        console.log("Wrong!! Correct Answer Position is : " + questions[index].correctAnswer);
+        // console.log("Wrong!! Correct Answer Position is : " + questions[index].correctAnswer);
         incorrectAnswerCount++;
     }
 }
@@ -126,16 +112,9 @@ function showSolution() {
     // 3. if time runs out show ... (Out of time! The correct answer was : questions[index].correctAnswer. And show gif of correct answer)
 }
 
-function displayNextQuestion() {
-    // 1. if there is another question display it
-    if (index < questions.length - 1) {
-        displayQuestion();
-    }
-}
-
-
 function startTimer() {
     // if (!isClockRunning) {
+    timer = 05;
     clearInterval(intervalId);
     intervalId = setInterval(decrement, 1000);
     isClockRunning = true;
@@ -146,14 +125,11 @@ function decrement() {
     timer--;
     $("#timer").html("<h2> Time Remaining: " + timer + " Seconds </h2>");
     if (timer === 0) {
-        stopTimer();
-        showSolution();
-        index++;
-        timer = 5;
-        startTimer();
-        displayQuestion();
+        // stopTimer();
+        // showSolution();
         unAnswerCount++;
-        incorrectAnswerCount++;
+        index++;
+        displayQuestion();
     }
 }
 
