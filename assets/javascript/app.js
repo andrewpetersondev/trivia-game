@@ -88,17 +88,18 @@ function displayQuestion() {
 }
 
 function evaluatePlayerAnswer() {
-    userGuess = parseInt($(this).attr("data-guess-value"));
+   var userGuess = parseInt($(this).attr("data-guess-value"));
     // console.log("Type of correctAnswer variable : " + typeof (questions[index].correctAnswer)); // logs number
-    // console.log("Type of userGuess variable : " + typeof (userGuess)); // logs number
-    // console.log("userGuess = " + userGuess); // logs number
+    console.log(userGuess);
+    console.log("userGuess = " + userGuess);
+    console.log("typeof userGuess = " + typeof(userGuess));
     if (userGuess === questions[index].correctAnswer) {
         correctAnswerCount++;
         stopTimer();
         // console.log("Correct! : " + questions[index].correctAnswer);
     }
     else {
-        // console.log("Wrong!! Correct Answer Position is : " + questions[index].correctAnswer);
+        console.log("Wrong!! Correct Answer Position is : " + questions[index].correctAnswer);
         incorrectAnswerCount++;
     }
 }
@@ -153,11 +154,11 @@ $("#start").on("click", function () {
 })
 
 $(".answerChoice").on("click", function () {
-    evaluatePlayerAnswer();
-})
-
-$(document).on("click", function () {
-    evaluatePlayerAnswer();
+    // evaluatePlayerAnswer(); // this is not needed because of click event in displayQuestions()
     displayQuestion();
 })
+
+// $(document).on("click", function (event) {
+//     displayQuestion();
+// })
 
