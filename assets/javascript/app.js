@@ -52,6 +52,7 @@ var game = {
     correct: 0,
     incorrect: 0,
     unanswered: 0,
+
     countdown: function () {
         game.counter--;
         $('#counter').html(game.counter);
@@ -60,6 +61,7 @@ var game = {
             game.timeUp();
         }
     },
+
     loadQuestion: function () {
         timer = setInterval(game.countdown, 1000);
         $('#subwrapper').html('<h2> Time Remaining <span id="counter"> 15 </span> Seconds </h2>');
@@ -68,12 +70,14 @@ var game = {
             $('#subwrapper').append('<button class="answer-button" id="button-' + i + '" data-name="' + questions[game.currentQuestion].answers[i] + '">' + questions[game.currentQuestion].answers[i] + '</button>');
         }
     },
+
     nextQuestion: function () {
         game.counter = 30;
         $('#counter').html(game.counter);
         game.currentQuestion++;
         game.loadQuestion();
     },
+
     timeUp: function () {
         clearInterval(timer);
         game.unanswered++;
@@ -85,6 +89,7 @@ var game = {
             setTimeout(game.nextQuestion, 3 * 1000);
         }
     },
+
     results: function () {
         clearInterval(timer);
         $('#subwrapper').html("<h2>All Done</h2>");
@@ -93,6 +98,7 @@ var game = {
         $('#subwrapper').append('<h3>unanswered: ' + game.unanswered + '</h3>');
         $('#subwrapper').append('<button id="reset">reset</button>');
     },
+
     clicked: function (e) {
         clearInterval(timer);
         if ($(e.target).data("name") == questions[game.currentQuestion].correctAnswer) {
@@ -101,6 +107,7 @@ var game = {
             game.answeredIncorrectly();
         }
     },
+
     answeredCorrectly: function () {
         console.log("correct");
         clearInterval(timer);
@@ -112,6 +119,7 @@ var game = {
             setTimeout(game.nextQuestion, 3 * 1000);
         }
     },
+
     answeredIncorrectly: function () {
         console.log("wrong");
         clearInterval(timer);
@@ -124,6 +132,7 @@ var game = {
             setTimeout(game.nextQuestion, 3 * 1000);
         }
     },
+
     reset: function () {
         game.currentQuestion = 0;
         game.counter = 0;
