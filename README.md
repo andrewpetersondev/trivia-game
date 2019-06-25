@@ -1,5 +1,9 @@
 # trivia-game
 
+## Take a look
+
+__[Trivia Game](https://andrewpetersondev.github.io/trivia-game/)__
+
 ## Technologies Used
 
 - HTML 5
